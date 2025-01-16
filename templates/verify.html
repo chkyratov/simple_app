@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHSupport - Verify</title>
+    <style>
+        :root {
+            --dark-bg: #1e2329;
+            --form-bg: #15191d;
+            --border-color: #2c353d;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.5);
+            --accent-color: #7bba3c;
+            --link-color: #8ba3b9;
+            --divider-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: var(--dark-bg);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            position: relative;
+            padding-bottom: 60px;
+        }
+
+        .box {
+            background: var(--form-bg);
+            width: 100%;
+            max-width: 700px;
+            padding: 24px;
+            box-sizing: border-box;
+            border-radius: 12px;
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 40px;
+            position: relative;
+            min-height: 120px;
+        }
+
+        .content-wrapper::after {
+            content: '';
+            position: absolute;
+            right: 380px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 80%;
+            width: 1px;
+            background: var(--divider-color);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: 20px;
+        }
+
+        .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .logo {
+            color: var(--text-primary);
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .form-section {
+            width: 360px;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .floating-label {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.2s ease;
+            pointer-events: none;
+            color: var(--text-secondary);
+            font-size: 14px;
+            padding: 0 4px;
+            background-color: var(--form-bg);
+        }
+
+        /* Стили для активного состояния при наведении на .box */
+        .box:hover .floating-label,
+        input:not(:placeholder-shown) ~ .floating-label {
+            top: 0;
+            transform: translateY(-50%);
+            font-size: 12px;
+            color: var(--accent-color);
+        }
+
+        .box:hover input {
+            border-color: var(--accent-color);
+        }
+
+        input {
+            width: 100%;
+            height: 40px;
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+            padding: 0 15px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .primary-button {
+            width: 100%;
+            height: 40px;
+            background: var(--accent-color);
+            border: none;
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .primary-button:hover {
+            background-color: #8acc4a;
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+        }
+
+        .link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--link-color);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .link:hover {
+            color: var(--text-primary);
+        }
+
+        .link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .phone-info {
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .phone-number {
+            color: var(--text-primary);
+            display: block;
+            margin-top: 5px;
+        }
+
+        .copyright {
+            color: var(--text-secondary);
+            font-size: 12px;
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            text-align: center;
+        }
+
+        /* Стили для сообщения об ошибке */
+        .error-message {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .error-message.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .input-container.error input {
+            border-color: #ff4d4d;
+        }
+
+        .input-container.error .floating-label {
+            color: #ff4d4d;
+        }
+
+        @media (max-width: 768px) {
+            .box {
+                margin: 20px;
+                padding: 20px;
+            }
+
+            .content-wrapper {
+                flex-direction: column;
+                gap: 24px;
+                min-height: auto;
+            }
+
+            .content-wrapper::after {
+                display: none;
+            }
+
+            .logo-section {
+                margin-left: 0;
+            }
+
+            .form-section {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="content-wrapper">
+            <div class="logo-section">
+                <div class="dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="logo">WH_Support</div>
+            </div>
+            <div class="form-section">
+                <form method="POST" class="form-container" id="verifyForm">
+                    <div class="phone-info">
+                        Код отправлен на номер:<br>
+                        <span class="phone-number">{{ session.get('phone') }}</span>
+                    </div>
+                    <div class="input-container">
+                        <input type="text" name="code" placeholder=" " maxlength="6" required pattern="\d{6}">
+                        <label class="floating-label">Код из СМС *</label>
+                        <div class="error-message"></div>
+                    </div>
+                    <button type="submit" class="primary-button">ПОДТВЕРДИТЬ</button>
+                    <div class="links">
+                        <a href="{{ url_for('login') }}" class="link">Изменить номер</a>
+                        <a href="#" class="link" id="resendCode">Отправить код повторно</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('verifyForm');
+            const codeInput = document.querySelector('input[name="code"]');
+            const submitButton = form.querySelector('button[type="submit"]');
+            const errorMessage = document.querySelector('.error-message');
+            const resendLink = document.getElementById('resendCode');
+
+            function showError(message, isSuccess = false) {
+                errorMessage.textContent = message;
+                errorMessage.classList.add('visible');
+                errorMessage.style.color = isSuccess ? '#7bba3c' : '#ff4d4d';
+                if (!isSuccess) {
+                    codeInput.parentNode.classList.add('error');
+                }
+            }
+
+            function hideError() {
+                errorMessage.classList.remove('visible');
+                errorMessage.textContent = '';
+                codeInput.parentNode.classList.remove('error');
+            }
+
+            codeInput.addEventListener('input', function(e) {
+                const value = e.target.value.replace(/\D/g, '');
+                e.target.value = value;
+                
+                if (value.length === 6) {
+                    hideError();
+                }
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const code = codeInput.value;
+
+                if (!/^\d{6}$/.test(code)) {
+                    showError('Введите 6 цифр кода');
+                    return;
+                }
+
+                submitButton.disabled = true;
+                hideError();
+
+                fetch(window.location.pathname, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ code: code })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        showError(data.error || 'Ошибка верификации');
+                        submitButton.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    showError('Произошла ошибка при проверке кода');
+                    submitButton.disabled = false;
+                });
+            });
+
+            resendLink.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                fetch('{{ url_for("login") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        phone: '{{ session.get("phone") }}'
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        showError('Код отправлен повторно', true);
+                        codeInput.value = '';
+                    } else {
+                        showError(data.error || 'Ошибка при отправке кода');
+                    }
+                })
+                .catch(error => {
+                    showError('Произошла ошибка при отправке запроса');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

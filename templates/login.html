@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WH_Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --dark-bg: #1e2329;
+            --form-bg: #15191d;
+            --border-color: #2c353d;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.5);
+            --accent-color: #7bba3c;
+            --link-color: #8ba3b9;
+            --divider-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background: var(--dark-bg);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            position: relative;
+            padding-bottom: 60px;
+            font-size: 16px;
+        }
+
+        .box {
+            background: var(--form-bg);
+            width: 100%;
+            max-width: 735px; /* Увеличено на 5% от 700px */
+            padding: 25px; /* Увеличено на 5% от 24px */
+            box-sizing: border-box;
+            border-radius: 13px; /* Увеличено на 5% от 12px */
+            transition: all 0.3s ease;
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 42px; /* Увеличено на 5% от 40px */
+            position: relative;
+            min-height: 126px; /* Увеличено на 5% от 120px */
+            padding-right: 21px;
+        }
+
+        .content-wrapper::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 80%;
+            width: 1px;
+            background: var(--divider-color);
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 13px; /* Увеличено на 5% от 12px */
+            margin-left: 21px; /* Увеличено на 5% от 20px */
+            flex: 1;
+            justify-content: flex-start;
+            width: 50%;
+        }
+
+        .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            background: var(--accent-color);
+            border-radius: 50%;
+        }
+
+        .logo {
+            color: var(--text-primary);
+            font-size: 21px; /* Увеличено на 5% от 20px */
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .form-section {
+            width: 50%;
+            padding-left: 42px;
+            box-sizing: border-box;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            gap: 11px; /* Увеличено на 5% от 10px */
+            max-width: 378px;
+            margin: 0 auto;
+        }
+
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-container .prefix {
+            position: absolute;
+            left: 16px; /* Увеличено на 5% от 15px */
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-primary);
+            font-size: 15px; /* Увеличено на 5% от 14px */
+            font-family: monospace;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .floating-label {
+            position: absolute;
+            left: 16px; /* Увеличено на 5% от 15px */
+            top: 50%;
+            transform: translateY(-50%);
+            transition: all 0.2s ease;
+            pointer-events: none;
+            color: var(--text-secondary);
+            font-size: 15px; /* Увеличено на 5% от 14px */
+            padding: 0 4px;
+            background-color: var(--form-bg);
+        }
+
+        .input-container input {
+            width: 100%;
+            height: 42px; /* Увеличено на 5% от 40px */
+            background: transparent;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 15px; /* Увеличено на 5% от 14px */
+            font-family: monospace;
+            padding: 0 16px; /* Увеличено на 5% от 15px */
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            letter-spacing: 1px;
+        }
+
+        .input-container.error input {
+            border: 1px solid #ff4d4d !important;
+        }
+
+        /* Стили для активного состояния при наведении на .box */
+        .box:hover .input-container input {
+            padding-left: 37px; /* Увеличено на 5% от 35px */
+        }
+
+        .box:hover .prefix {
+            opacity: 1;
+        }
+
+        .box:hover .floating-label,
+        .input-container input:not(:placeholder-shown) ~ .floating-label {
+            top: 0;
+            transform: translateY(-50%);
+            font-size: 13px; /* Увеличено на 5% от 12px */
+            color: var(--accent-color);
+        }
+
+        .input-container input:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+
+        .primary-button {
+            width: 100%;
+            height: 42px; /* Увеличено на 5% от 40px */
+            background: var(--accent-color);
+            border: none;
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 15px; /* Увеличено на 5% от 14px */
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .primary-button:hover {
+            background-color: #8acc4a;
+        }
+
+        .links {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 6px;
+        }
+
+        .link {
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 15px; /* Увеличено на 5% от 14px */
+            transition: all 0.2s;
+            position: relative;
+        }
+
+        .link::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--link-color);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .link:hover {
+            color: var(--text-primary);
+        }
+
+        .link:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .copyright {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.3);
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .copyright-year {
+            color: rgba(255, 255, 255, 0.3);
+            font-weight: 300;
+            letter-spacing: 0.5px;
+        }
+
+        .copyright-powered {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+            font-size: 13px;
+        }
+
+        .copyright-author {
+            color: #7bba3c;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            letter-spacing: 0.2px;
+        }
+
+        .copyright-author:hover {
+            color: #8fd144;
+            text-decoration: underline;
+        }
+
+        /* Адаптивные стили */
+        @media (max-width: 768px) {
+            .box {
+                margin: 20px;
+                padding: 20px;
+                max-width: calc(100% - 40px);
+            }
+
+            .content-wrapper {
+                flex-direction: column;
+                gap: 24px;
+                min-height: auto;
+            }
+
+            .content-wrapper::after {
+                display: none;
+            }
+
+            .logo-section {
+                margin-left: 0;
+            }
+
+            .form-section {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                font-size: 14px;
+            }
+
+            .box {
+                margin: 15px;
+                padding: 15px;
+            }
+
+            .logo {
+                font-size: 18px;
+            }
+
+            .input-container input,
+            .primary-button {
+                height: 38px;
+            }
+
+            .links {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .box {
+                max-width: 800px;
+            }
+
+            body {
+                font-size: 18px;
+            }
+        }
+
+        /* Стили для сохранения фокуса при вводе */
+        .input-container input:not(:placeholder-shown) {
+            border-color: var(--accent-color);
+            padding-left: 37px; /* Увеличено на 5% от 35px */
+        }
+
+        .input-container input:not(:placeholder-shown) ~ .prefix {
+            opacity: 1;
+        }
+
+        /* Добавляем стили для сообщения об ошибке */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 25px;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        .notification.success {
+            background: var(--accent-color);
+        }
+
+        .notification.error {
+            background: #ff4d4d;
+        }
+
+        .notification.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="content-wrapper">
+            <div class="logo-section">
+                <div class="dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <div class="logo">WH_Support</div>
+            </div>
+            <div class="form-section">
+                <form method="POST" class="form-container" id="loginForm">
+                    <div class="input-container">
+                        <input type="tel" name="phone" placeholder=" " required>
+                        
+                        <label class="floating-label">Номер телефона *</label>
+                    </div>
+                    <button type="submit" class="primary-button">Получить код</button>
+                    <div class="links">
+                        <a href="{{ url_for('anonimous') }}" class="link">Анонимный вход</a>
+                        <a href="{{ url_for('complaint') }}" class="link">Оставить жалобу</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="notification" id="notification"></div>
+    <div class="copyright">
+        <span class="copyright-year">@ 2025</span> <span class="copyright-powered">Powered by</span> <a href="https://team.wb.ru/account/users/811" target="_blank" class="copyright-author">Shkuratov Aleksey</a>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('loginForm');
+            const phoneInput = document.querySelector('input[name="phone"]');
+            const submitButton = form.querySelector('button[type="submit"]');
+
+            function formatPhone(phone) {
+                const digits = phone.replace(/\D/g, '');
+                if (digits.startsWith('8')) {
+                    return '+7' + digits.slice(1);
+                }
+                if (digits.startsWith('7')) {
+                    return '+' + digits;
+                }
+                return '+7' + digits;
+            }
+
+            phoneInput.addEventListener('input', function(e) {
+                let value = e.target.value.replace(/\D/g, '');
+                console.log('Input value:', value);
+                console.log('Input length:', value.length);
+                
+                if (value) {
+                    e.target.value = formatPhone(value);
+                    // Проверяем только длину для красной рамки
+                    if (value.length < 11 || !value.startsWith('7')) {
+                        console.log('Adding error class');
+                        phoneInput.style.borderColor = '#ff4d4d';
+                        phoneInput.parentNode.classList.add('error');
+                    } else {
+                        console.log('Removing error class');
+                        phoneInput.style.borderColor = '';
+                        phoneInput.parentNode.classList.remove('error');
+                    }
+                } else {
+                    console.log('Empty input, removing error class');
+                    phoneInput.style.borderColor = '';
+                    phoneInput.parentNode.classList.remove('error');
+                }
+            });
+
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                const phone = phoneInput.value;
+                const value = phone.replace(/\D/g, '');
+
+                if (!value || value.length < 11 || !value.startsWith('7')) {
+                    phoneInput.parentNode.classList.add('error');
+                    return;
+                }
+
+                submitButton.disabled = true;
+                phoneInput.parentNode.classList.remove('error');
+
+                fetch(window.location.pathname, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ phone: phone })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = data.redirect;
+                    } else {
+                        phoneInput.parentNode.classList.add('error');
+                        submitButton.disabled = false;
+                    }
+                })
+                .catch(error => {
+                    phoneInput.parentNode.classList.add('error');
+                    submitButton.disabled = false;
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WHSupport - В разработке</title>
+    <style>
+        :root {
+            --dark-bg: #1e2329;
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.5);
+            --accent-color: #7bba3c;
+        }
+
+        body {
+            background: var(--dark-bg);
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-primary);
+        }
+
+        .message {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .back-link:hover {
+            color: #8acc4a;
+        }
+    </style>
+</head>
+<body>
+    <div class="message">
+        <h1>Страница в разработке</h1>
+        <p>Данный функционал пока недоступен</p>
+    </div>
+    <a href="{{ url_for('login') }}" class="back-link">Вернуться на главную</a>
+</body>
+</html>

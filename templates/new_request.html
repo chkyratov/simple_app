@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Новая заявка - WHSupport</title>
+    <style>
+        body {
+            background: #1e2329;
+            margin: 0;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding: 20px 0;
+            border-bottom: 1px solid #2c353d;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            background: #7bba3c;
+            border-radius: 50%;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 20px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .nav-link:hover {
+            color: #7bba3c;
+        }
+
+        .new-request {
+            background: #1a1f24;
+            border-radius: 12px;
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 14px;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #2c353d;
+            border-radius: 6px;
+            color: #fff;
+            font-size: 14px;
+            padding: 12px 15px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        button {
+            background: #7bba3c;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            padding: 12px 30px;
+            font-size: 14px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .copyright {
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 12px;
+            text-align: center;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo-section">
+                <div class="dots">
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                    <div class="dot"></div>
+                </div>
+                <a href="{{ url_for('dashboard') }}" class="logo">WHSupport</a>
+            </div>
+            <nav class="nav-links">
+                <a href="{{ url_for('dashboard') }}" class="nav-link">Мои заявки</a>
+                <a href="{{ url_for('logout') }}" class="nav-link">Выйти</a>
+            </nav>
+        </header>
+
+        <main class="new-request">
+            <h1>Новая заявка</h1>
+            <form method="POST" action="{{ url_for('new_request') }}">
+                <div class="form-group">
+                    <label for="title">Локация</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="title">Категория</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="title">Фио</label>
+                    <input type="text" id="title" name="title" required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Описание</label>
+                    <textarea id="description" name="description" required></textarea>
+                </div>
+                <button type="submit">Отправить</button>
+            </form>
+        </main>
+
+        <footer class="copyright">
+            ©2025 Powered by Shkuratov Aleksey
+        </footer>
+    </div>
+</body>
+</html>
